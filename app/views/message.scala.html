@@ -1,0 +1,24 @@
+@(messageSeq: Seq[Message])
+
+@render(messageSeq: Seq[Message]) = {
+  @for(message <- messageSeq) {
+    <tr>
+    @defining(message.title + "/" + message.body + "/" + message.senderName) { text =>
+      <td>@text</td>
+    }
+    </tr>
+  }
+}
+
+@main("メッセージ") {
+
+  @if(messageSeq.isEmpty) {
+    <span>メッセージがありません。</span>
+  } else {
+    <span>@{messageSeq.length}件</span>
+    <table>
+      @render(messageSeq)
+    </table>
+  }
+
+}
