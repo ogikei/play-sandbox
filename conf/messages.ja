@@ -1,0 +1,2 @@
+notFoundUserError=指定されたメールアドレス({0})のユーザが見つかりません。
+invalidPasswordError=指定されたメールアドレス({0})のパスワードが正しくありません。

@@ -9,8 +9,12 @@ class EchoController @Inject()(components: ControllerComponents)
     extends AbstractController(components) {
 
   def echo: Action[AnyContent] = Action { request =>
-    val message = request.queryString("message").head
-    Ok(views.html.echo(message))
+    if (request.queryString.contains("message")) {
+      val message = request.queryString("message").head
+      Ok(views.html.echo(message))
+    } else {
+      BadRequest("require message parameter")
+    }
   }
 
 }

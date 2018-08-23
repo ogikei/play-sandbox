@@ -1,6 +1,7 @@
 package controllers
 
 import javax.inject._
+import models.User
 import play.api._
 import play.api.mvc._
 
@@ -19,6 +20,10 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
    * a path of `/`.
    */
   def index() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.index())
+    val userOpt: Option[User] = for {
+      userIdString <- request.session.get("userId")
+      user <- User.findById(userIdString.toLong)
+    } yield user
+    Ok(views.html.index(userOpt))
   }
 }

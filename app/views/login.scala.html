@@ -1,12 +1,21 @@
-@import forms.Login
-@(form: Form[Login])(implicit messagesProvider: MessagesProvider)
+@* フィールドコンストラクタの追加 *@
+@import b3.vertical.fieldConstructor
+@(form: Form[Login])(implicit messagesProvider: MessagesProvider, request: RequestHeader)
 
 @main("ログイン") {
 
-  @helper.form(action = routes.LoginController.login) {
-    @helper.inputText(form("email"))
-    @helper.inputPassword(form("password"))
-    <input type="submit" value="Login"/>
+  @form.globalError.map { error =>
+    @* divタグで囲む *@
+    <div class="alert alert-warning" role="alert">
+      @error.message
+    </div>
+  }
+  @* 以下に書き換える *@
+  @b3.formCSRF(routes.LoginController.login, 'class -> "form-signin") {
+    <h2 class="form-signin-heading">Please sign in</h2>
+    @b3.email(form("email"), '_label -> "Email", 'placeholder -> "example@mail.com")
+    @b3.password(form("password"), '_label -> "Password", 'placeholder -> "Password")
+    @b3.submit('class -> "btn btn-lg btn-primary btn-block") { Sign in }
   }
 
 }

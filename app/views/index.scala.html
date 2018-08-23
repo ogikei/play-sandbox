@@ -1,5 +1,11 @@
-@()
+@(userOpt: Option[User])
 
 @main("Welcome to Play") {
   <h1>Welcome to Play!</h1>
+  <h3><span class="label label-default">@userOpt.toString</span></h3>
+  @if(userOpt.isEmpty) {
+    <a href="@routes.LoginController.index" class="btn btn-primary">Login</a>
+  } else {
+    <a href="@routes.LoginController.logout" class="btn btn-primary">Logout</a>
+  }
 }
